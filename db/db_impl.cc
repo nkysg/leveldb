@@ -114,6 +114,7 @@ Options SanitizeOptions(const std::string& dbname,
   return result;
 }
 
+//raw_options.comparator默认是BytewiseComparator, util/options.cc构造函数
 DBImpl::DBImpl(const Options& raw_options, const std::string& dbname)
     : env_(raw_options.env),
       internal_comparator_(raw_options.comparator),

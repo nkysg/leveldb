@@ -23,6 +23,7 @@
 
 namespace leveldb {
 
+//12byte长度,前8byte用于表示sequence number,后面4个byte表示数量
 // WriteBatch header has an 8-byte sequence number followed by a 4-byte count.
 static const size_t kHeader = 12;
 
