@@ -11,7 +11,9 @@ namespace leveldb {
 
 // Tag numbers for serialized VersionEdit.  These numbers are written to
 // disk and should not be changed.
+// 代码比较简单
 enum Tag {
+  //比较算法
   kComparator           = 1,
   kLogNumber            = 2,
   kNextFileNumber       = 3,

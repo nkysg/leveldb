@@ -921,6 +921,7 @@ Status VersionSet::Recover(bool *save_manifest) {
   }
   current.resize(current.size() - 1);
 
+  //读取Manifest文件,实际也是一种log
   std::string dscname = dbname_ + "/" + current;
   SequentialFile* file;
   s = env_->NewSequentialFile(dscname, &file);
@@ -936,6 +937,7 @@ Status VersionSet::Recover(bool *save_manifest) {
   uint64_t last_sequence = 0;
   uint64_t log_number = 0;
   uint64_t prev_log_number = 0;
+  //XXX FIXME做什么的没懂
   Builder builder(this, current_);
 
   {

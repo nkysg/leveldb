@@ -13,6 +13,7 @@
 namespace leveldb {
 
 class VersionSet;
+//记录下所有的操作,并且序列化到Manifest文件里面
 
 struct FileMetaData {
   int refs;

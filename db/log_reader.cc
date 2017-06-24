@@ -57,6 +57,7 @@ bool Reader::SkipToInitialBlock() {
   return true;
 }
 
+//读取日志，一次读取32k
 bool Reader::ReadRecord(Slice* record, std::string* scratch) {
   if (last_record_offset_ < initial_offset_) {
     if (!SkipToInitialBlock()) {
@@ -81,6 +82,7 @@ bool Reader::ReadRecord(Slice* record, std::string* scratch) {
     uint64_t physical_record_offset =
         end_of_buffer_offset_ - buffer_.size() - kHeaderSize - fragment.size();
 
+    //如果是resyncing_ true(initial_offset > 0)而且record_type == kMiddleType
     if (resyncing_) {
       if (record_type == kMiddleType) {
         continue;
@@ -202,6 +204,7 @@ unsigned int Reader::ReadPhysicalRecord(Slice* result) {
       if (!eof_) {
         // Last read was a full read, so this is a trailer to skip
         buffer_.clear();
+	//file_是SequentialFile只是个接口,实际上是PosixSequentialFile
         Status status = file_->Read(kBlockSize, &buffer_, backing_store_);
         end_of_buffer_offset_ += buffer_.size();
         if (!status.ok()) {
@@ -224,6 +227,7 @@ unsigned int Reader::ReadPhysicalRecord(Slice* result) {
     }
 
     // Parse the header
+    // doc/log_format.md
     const char* header = buffer_.data();
     const uint32_t a = static_cast<uint32_t>(header[4]) & 0xff;
     const uint32_t b = static_cast<uint32_t>(header[5]) & 0xff;
