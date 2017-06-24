@@ -1129,6 +1129,7 @@ Status DBImpl::Get(const ReadOptions& options,
 
   bool have_stat_update = false;
   Version::GetStats stats;
+  //查找过程先查找memtable, 再查找immemtable,再查找VerSion
 
   // Unlock while reading from files and memtables
   {
